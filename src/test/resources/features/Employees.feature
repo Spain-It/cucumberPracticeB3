@@ -10,5 +10,3 @@ Feature: get email from Employees page
     And Click the list button
     Then Print the email of David Samson
 
-
-    Scenario:
