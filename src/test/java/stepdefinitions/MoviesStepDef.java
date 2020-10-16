@@ -94,4 +94,35 @@ public class MoviesStepDef {
 
     }
 
+    @Given("the user sends put request with {string} end point")
+    public void the_user_sends_put_request_with_end_point(String endPoint, Map<String,Object> data) {
+
+        response = given().accept(ContentType.JSON).when().body(data).put(endPoint+"/1459");
+
+        response = given().get("/movies/1459");
+        response.prettyPrint();
+
+    }
+
+
+
+    @Then("Verify the response body is updated")
+    public void verify_the_response_body_is_updated() {
+
+        Map<String,Object> data = new HashMap<>();
+        data.put("id", 1459);
+        data.put("title","Dallas");
+        data.put("year",2012);
+        data.put("plot","Vlkn");
+        data.put("duration",1111);
+        data.put("audio_qualities","");
+        data.put("video_qualities","");
+        data.put("genres","");
+
+        response=given().get("/movies/1459");
+
+        Assert.assertEquals(data.get("title"),response.path("title"));
+
+    }
+
 }
