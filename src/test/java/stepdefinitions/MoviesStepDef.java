@@ -1,7 +1,11 @@
 package stepdefinitions;
 
 import io.cucumber.java.en.*;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import utilities.ConfigReader;
@@ -17,7 +21,7 @@ public class MoviesStepDef {
 
     @Given("the user set uri")
     public void the_user_set_uri() {
-        baseURI = ConfigReader.getProperty("rakuten_uri");
+       baseURI = ConfigReader.getProperty("rakuten_uri");
     }
 
 
@@ -58,5 +62,36 @@ public class MoviesStepDef {
        response.prettyPrint();
     }
 
+
+    @Given("the user sends get request with {string} end point {int}")
+    public void the_user_sends_get_request_with_end_point(String endPoint, int id) {
+      response = given().accept(ContentType.JSON).pathParam("id",id).when().
+                  get(endPoint+"/{id}");
+    }
+
+    @Then("Verify the response body is equal which is you posted")
+    public void verify_the_response_body_is_equal_which_is_you_posted() {
+
+        Map<String,Object> data = new HashMap<>();
+        data.put("id", 1459);
+        data.put("title","Salamanca");
+        data.put("year",1997);
+        data.put("plot","MrtFth");
+        data.put("duration",123);
+        data.put("audio_qualities","");
+        data.put("video_qualities","");
+        data.put("genres","");
+
+//        JsonPath json= response.jsonPath();
+//
+//        Assert.assertEquals(data.get("id"),json.getInt("id"));
+//        Assert.assertEquals(data.get("plot"),json.getString("plot"));
+
+        System.out.println(response.path("id").toString());
+        System.out.println(response.path("title").toString());
+
+        Assert.assertEquals(data.get("year"),response.path("year"));
+
+    }
 
 }

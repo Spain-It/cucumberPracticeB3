@@ -15,7 +15,3 @@ Feature: Movies end point
     And Verify the content type is "application/json; charset=utf-8"
     Then print the response body
 
-     # to organize the feature
-    # Ctrl + Alt + L
-
-     # break 15 at 36
