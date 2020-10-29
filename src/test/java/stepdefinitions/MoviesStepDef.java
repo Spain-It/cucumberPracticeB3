@@ -17,7 +17,7 @@ import static io.restassured.RestAssured.*;
 
 public class MoviesStepDef {
 
-    Response response;
+    static Response response;
 
     @Given("the user set uri")
     public void the_user_set_uri() {
